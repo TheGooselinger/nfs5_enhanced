@@ -234,6 +234,8 @@ namespace nfs5
         s.m_Io.m_ReadChunkKB = std::clamp( ReadInt( L"IO", L"ReadChunkKB", 1024 ), 16, 65536 );
         s.m_Io.m_CacheDiskFreeSpace = ReadBool( L"IO", L"CacheDiskFreeSpace", true );
         s.m_Io.m_FastCpuSpeedCheck = ReadBool( L"Loading", L"FastCpuSpeedCheck", true );
+        s.m_Io.m_GameplayRedirect = ReadBool( L"IO", L"GameplayRedirect", false );
+        s.m_Io.m_GameplayRedirectTrace = ReadBool( L"IO", L"GameplayRedirectTrace", false );
         s.m_Hud.m_Enabled = ReadBool( L"HudScaling", L"Enabled", true );
         s.m_Hud.m_ReferenceHeight = std::clamp( ReadInt( L"HudScaling", L"ReferenceHeight", 480 ), 240, 4320 );
         s.m_Hud.m_ScaleMultiplier = std::clamp( ReadFloat( L"HudScaling", L"ScaleMultiplier", 1.0f ), 0.25f, 4.0f );

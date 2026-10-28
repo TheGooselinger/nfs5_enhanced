@@ -99,6 +99,8 @@ namespace nfs5
         int m_ReadChunkKB = 1024;
         bool m_CacheDiskFreeSpace = true;
         bool m_FastCpuSpeedCheck = true;
+        bool m_GameplayRedirect = false;
+        bool m_GameplayRedirectTrace = false;
     };
 
     struct HudSettings
