@@ -1276,11 +1276,12 @@ namespace dx11z
         m_ConfigWindowHeight = static_cast<int>(::GetPrivateProfileIntA( "Dx11", "WindowHeight", 0, ini.c_str() ));
         m_ConfigVsync = ::GetPrivateProfileIntA( "Dx11", "VSync", 1, ini.c_str() ) != 0;
         m_ConfigMinimize = ::GetPrivateProfileIntA( "Dx11", "MinimizeOnFocusLoss", 1, ini.c_str() ) != 0;
+        m_ConfigFogEnabled = ::GetPrivateProfileIntA( "Dx11", "FogEnabled", 1, ini.c_str() ) != 0;
         m_TraceLines = static_cast<int>(::GetPrivateProfileIntA( "Dx11", "Trace", 0, ini.c_str() ));
 
         Log( "Config ResolutionScale %d Antialiasing %d Anisotropy %d WindowMode %d Window %dx%d", m_ConfigScale, m_ConfigSamples, m_ConfigAnisotropy,
             m_ConfigWindowMode, m_ConfigWindowWidth, m_ConfigWindowHeight );
-        Log( "Config VSync %d MinimizeOnFocusLoss %d", m_ConfigVsync ? 1 : 0, m_ConfigMinimize ? 1 : 0 );
+        Log( "Config VSync %d MinimizeOnFocusLoss %d FogEnabled %d", m_ConfigVsync ? 1 : 0, m_ConfigMinimize ? 1 : 0, m_ConfigFogEnabled ? 1 : 0 );
     }
 
     void Driver::MakeDpiAware()
@@ -3549,7 +3550,7 @@ namespace dx11z
         constants.m_FogParams[1] = AsFloat( render[rs::FOGEND] );
         constants.m_FogParams[2] = AsFloat( render[rs::FOGDENSITY] );
         constants.m_FogParams[3] = static_cast<float>(render[rs::FOGTABLEMODE]);
-        constants.m_Flags[0] = render[rs::FOGENABLE] != 0;
+        constants.m_Flags[0] = m_ConfigFogEnabled && render[rs::FOGENABLE] != 0;
         constants.m_Flags[1] = render[rs::SPECULARENABLE] != 0;
         constants.m_Flags[2] = render[rs::ALPHATESTENABLE] != 0 ? static_cast<std::int32_t>(render[rs::ALPHAFUNC]) : 8;
         constants.m_Flags[3] = (m_Bound[0] != nullptr ? 1 : 0) | (m_Bound[1] != nullptr ? 2 : 0);

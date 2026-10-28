@@ -40,6 +40,7 @@ struct PixelIn
     float4 m_Specular : COLOR1;
     float4 m_Uv : TEXCOORD0;
     float m_Depth : TEXCOORD1;
+    float m_EyeDepth : TEXCOORD2;
 };
 
 PixelIn MainVS( VertexIn input )
@@ -58,6 +59,7 @@ PixelIn MainVS( VertexIn input )
     output.m_Specular = input.m_Specular.zyxw;
     output.m_Uv = float4( input.m_Uv0, input.m_Uv1 );
     output.m_Depth = input.m_Position.z;
+    output.m_EyeDepth = w;
     return output;
 }
 
@@ -199,11 +201,12 @@ float4 MainPS( PixelIn input ) : SV_Target
         float fog;
         int mode = (int)g_FogParams.w;
         float depth = saturate( input.m_Depth );
+        float eyeDepth = max( input.m_EyeDepth, 0.0 );
 
         if ( mode == 1 )
-            fog = exp( -g_FogParams.z * depth );
+            fog = exp( -g_FogParams.z * eyeDepth );
         else if ( mode == 2 )
-            fog = exp( -( g_FogParams.z * depth ) * ( g_FogParams.z * depth ) );
+            fog = exp( -( g_FogParams.z * eyeDepth ) * ( g_FogParams.z * eyeDepth ) );
         else if ( mode == 3 )
             fog = ( g_FogParams.y - depth ) / max( g_FogParams.y - g_FogParams.x, 1e-6 );
         else

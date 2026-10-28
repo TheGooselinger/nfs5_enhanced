@@ -263,6 +263,7 @@ namespace dx11z
         bool m_WindowPlaced = false;
         bool m_ConfigVsync = true;
         bool m_ConfigMinimize = true;
+        bool m_ConfigFogEnabled = true;
         bool m_AllowTearing = false;
         UINT m_SwapChainFlags = 0;
         WNDPROC m_OriginalWndProc = nullptr;
